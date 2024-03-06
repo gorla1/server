@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const loginRouter = require("./Routes/loginRoutes");
 const usersRouter = require("./Routes/userRoutes");
 const messageRouter = require("./Routes/messageRoute");
-const { Server } = require("socket.io");
+// const { Server } = require("socket.io");
 const Message = require("./Models/messageModels");
 // dotenv
 require("dotenv").config();
@@ -24,17 +24,6 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-// mongoose.connect(`${uri}`,
-//  {useNewUrlParser : "true"})
-
-//  mongoose.connection.on('connected',(err,res)=>{
-//      console.log('database connected')
-//  })
-
-//  mongoose.connection.on('err',(err)=>{
-//      console.log(err)
-//  })
-
 mongoose
   .connect(`${uri}`, {
     useNewUrlParser: true,
@@ -46,23 +35,27 @@ mongoose
   .catch((err) => {
     console.log("MongoDB Connection Failed");
   });
-
-const server = app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
-
-const io = new Server(server, {
-  pingTimeout: 60000,
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-  // Disconnect
-  socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
+  
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
   });
-});
+
+// const server = app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
+
+// const io = new Server(server, {
+//   pingTimeout: 60000,
+//   cors: {
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST"],
+//   },
+// });
+
+// io.on("connection", (socket) => {
+//   console.log(`User Connected: ${socket.id}`);
+//   // Disconnect
+//   socket.on("disconnect", () => {
+//     console.log("User Disconnected", socket.id);
+//   });
+// });
