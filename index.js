@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 //  })
 
 mongoose
-  .connect(uri, {
+  .connect(`${uri}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
