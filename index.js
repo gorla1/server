@@ -14,6 +14,7 @@ const uri = process.env.MONGO_URL;
 
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/login", loginRouter);
 app.use("/users", usersRouter);
