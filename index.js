@@ -24,21 +24,34 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-mongoose
-  .connect(`${uri}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("MongoDB Connection Successfull");
-  })
-  .catch((err) => {
-    console.log("MongoDB Connection Failed");
-  });
-  
+// mongoose
+//   .connect(`${uri}`, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("MongoDB Connection Successfull");
+//   })
+//   .catch((err) => {
+//     console.log("MongoDB Connection Failed");
+//   });
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
+
+connectDB().then(() => {
   app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+      console.log("listening for requests");
   });
+});
 
 // const server = app.listen(port, () => {
 //   console.log(`Server running at http://localhost:${port}`);
