@@ -100,12 +100,12 @@ const getTokenUsingRefreshToken = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({ _id: { $ne: decoded.id } });
-        // don't send password to client
-        users.forEach((user) => {
-          delete user.password;
-        });
-        res.status(200).json(users);
+    const users = await User.find();
+    // don't send password to client
+    users.forEach((user) => {
+      delete user.password;
+    });
+    res.status(200).json(users);
   } catch (error) {
     next(error);
   }
